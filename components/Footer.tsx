@@ -1,4 +1,7 @@
 // components/Footer.tsx
+'use client';
+
+import { useState, useEffect } from 'react';
 import { Locale } from '@/types';
 
 interface FooterProps {
@@ -6,7 +9,11 @@ interface FooterProps {
 }
 
 export default function Footer({ lang }: FooterProps) {
-  const currentYear = new Date().getFullYear();
+  const [currentYear, setCurrentYear] = useState<number>(2026);
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
 
   return (
     <footer className="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 py-8 transition-colors">
