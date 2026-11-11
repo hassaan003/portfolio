@@ -17,17 +17,17 @@ const techLinks = [
 ];
 
 interface PageProps {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }
 
 async function HeroContent({ params }: PageProps) {
-  const { lang } = await params;
+  const resolvedParams = await params;
+  const lang = (resolvedParams.lang === 'ur' ? 'ur' : 'en') as Locale;
   const dict = dictionaries[lang] || dictionaries.en;
 
   return (
     <section className="h-full flex flex-col items-center justify-center text-center">
-      {/* 96px bold name at the reference size */}
-      <h1 className="text-[clamp(2rem,8vw,3rem)] sm:text-[clamp(2rem,4vw,6rem)]  uppercase leading-none tracking-normal text-foreground">
+      <h1 className="text-[clamp(2rem,8vw,3rem)] sm:text-[clamp(2rem,4vw,6rem)] uppercase leading-none tracking-normal text-foreground">
         Hassaan Ahmed
       </h1>
 

@@ -71,15 +71,38 @@ body {
 }
 
 /* Section titles with the yellow marker underline */
+/* Section titles with the yellow marker underline */
 @layer components {
   .heading-marker {
+    position: relative;
+    isolation: isolate;
     display: inline-block;
-    font-size: 1.375rem; /* ~15.1px at your 11px root (larger than your 1.0625rem / 11.7px body) */
+
+    font-size: 1.375rem;
     font-weight: 300;
     line-height: 0.5;
     letter-spacing: 0.006em;
     text-transform: uppercase;
-    background: linear-gradient(transparent 76%, var(--marker) 76%);
+
+    /* Remove the original gradient line */
+    background: none;
+  }
+
+  .heading-marker::after {
+    content: "";
+    position: absolute;
+
+    /* Extend the yellow line beyond both ends of the text */
+    left: -0.35rem;
+    right: -0.35rem;
+
+    /* Move the line slightly below the heading's box */
+    bottom: -0.35rem;
+    height: 3.5rem;
+
+    background-color: var(--marker);
+    z-index: -1;
+    pointer-events: none;
   }
 }
 

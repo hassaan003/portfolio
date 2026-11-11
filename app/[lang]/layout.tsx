@@ -14,11 +14,12 @@ export async function generateStaticParams() {
 
 interface LayoutProps {
   children: ReactNode;
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }
 
 export default async function LocalizedLayout({ children, params }: LayoutProps) {
-  const { lang } = await params;
+  const resolvedParams = await params;
+  const lang = (resolvedParams.lang === 'ur' ? 'ur' : 'en') as Locale;
   const dict = dictionaries[lang] || dictionaries.en;
   const isRtl = lang === 'ur';
 
