@@ -1,4 +1,3 @@
-// components/Navbar.tsx
 'use client';
 
 import { useState } from 'react';
@@ -14,102 +13,88 @@ interface NavbarProps {
   lang: Locale;
 }
 
+const softButton =
+  'inline-flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/10 transition-colors';
+
 export default function Navbar({ dict, lang }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const pathname = usePathname();
 
-  // Helper to switch languages while maintaining the current page path
+  // Switch language but stay on the same page
   const toggleLocale = lang === 'en' ? 'ur' : 'en';
-  const newPathname = pathname.replace(`/${lang}`, `/${toggleLocale}`);
+  const newPathname = `/${toggleLocale}${pathname.slice(lang.length + 1)}`;
+
+  const links = [
+    { href: `/${lang}/resume`, label: dict.nav.resume },
+    { href: `/${lang}/projects`, label: dict.nav.projects },
+  ];
+
+  const linkClass = 'text-foreground hover:text-brand transition-colors';
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        
-        {/* Logo */}
-        <Link href={`/${lang}`} className="font-bold text-xl tracking-tight text-gray-900 dark:text-white">
-          Hassaan<span className="text-indigo-600">.dev</span>
-        </Link>
+    // header
+    <header className="relative flex items-center justify-between pt-5 sm:pt-4 lg:pt-10 lg:pe-2 lg:ms-6">
+      {/* Logo */}
+      <Link
+        href={`/${lang}`}
+        aria-label="Home"
+        // logo
+        className="text-[1.8rem] sm:text-[2.05rem] font-bold tracking-tight hover:text-brand transition-colors"      >
+        HA
+      </Link>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center space-x-8 rtl:space-x-reverse">
-          <Link href={`/${lang}#about`} className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors">
-            {dict.nav.about}
-          </Link>
-          <Link href={`/${lang}#projects`} className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors">
-            {dict.nav.projects}
-          </Link>
-          <Link href={`/${lang}#experience`} className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors">
-            {dict.nav.experience}
-          </Link>
-          <Link href={`/${lang}#contact`} className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors">
-            {dict.nav.contact}
-          </Link>
-        </nav>
-
-        {/* Controls: Language & Theme Toggle */}
-        <div className="flex items-center space-x-4 rtl:space-x-reverse">
-          {/* Language Switcher */}
-          <Link
-            href={newPathname}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-          >
-            <Globe className="w-4 h-4" />
-            <span>{lang === 'en' ? 'اردو' : 'English'}</span>
-          </Link>
-
-          {/* Theme Toggle Button */}
+      <div className="flex items-center gap-2 md:gap-8 lg:gap-[3.25rem]">
+        <div className="flex items-center gap-6 sm:gap-12">
+          {/* Theme */}
           <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+            className={`${softButton} size-10`}
             aria-label="Toggle theme"
           >
-            <Sun className="w-5 h-5 hidden dark:block" />
-            <Moon className="w-5 h-5 block dark:hidden" />
+            <Sun className="size-6 hidden dark:block" />
+            <Moon className="size-6 block dark:hidden" />
           </button>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Language */}
+          <Link href={newPathname} className={`${softButton} h-10 gap-1.5 px-2.5`}>
+            <Globe className="size-6" />
+            <span>{lang === 'en' ? 'اردو' : 'EN'}</span>
+          </Link>
         </div>
+
+        {/* Desktop links */}
+        <nav className="hidden md:flex items-center gap-8 lg:gap-[4.25rem]">
+          {links.map((link) => (
+            <Link key={link.href} href={link.href} className={linkClass}>
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Menu button (mobile) */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={`${softButton} md:hidden size-10`}
+          aria-label="Toggle menu"
+        >
+          {isOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+        </button>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 pt-2 pb-4 space-y-2">
-          <Link
-            href={`/${lang}#about`}
-            onClick={() => setIsOpen(false)}
-            className="block py-2 text-gray-600 dark:text-gray-300"
-          >
-            {dict.nav.about}
-          </Link>
-          <Link
-            href={`/${lang}#projects`}
-            onClick={() => setIsOpen(false)}
-            className="block py-2 text-gray-600 dark:text-gray-300"
-          >
-            {dict.nav.projects}
-          </Link>
-          <Link
-            href={`/${lang}#experience`}
-            onClick={() => setIsOpen(false)}
-            className="block py-2 text-gray-600 dark:text-gray-300"
-          >
-            {dict.nav.experience}
-          </Link>
-          <Link
-            href={`/${lang}#contact`}
-            onClick={() => setIsOpen(false)}
-            className="block py-2 text-gray-600 dark:text-gray-300"
-          >
-            {dict.nav.contact}
-          </Link>
+        <div className="md:hidden absolute inset-x-0 top-full z-20 flex flex-col border border-line bg-background px-4 py-2">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setIsOpen(false)}
+              className={`py-3 ${linkClass}`}
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
       )}
     </header>

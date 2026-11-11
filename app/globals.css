@@ -1,18 +1,105 @@
 @import "tailwindcss";
 
+/* Makes dark: classes follow the .dark class (set by next-themes) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------- Design tokens (light / dark) ---------- */
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --navy: #1d2860;     /* body copy */
+  --brand: #2e3da0;    /* labels, timeline, accents */
+  --frame: #2e3da0;    /* outer blue frame */
+  --marker: #f3e86b;   /* yellow heading underline */
+  --line: #dcdcdc;     /* thin borders */
+  --muted: #8a8a8a;    /* footer text */
 }
 
-/* When the html tag has the .dark class, override the custom background variables */
 html.dark {
   --background: #0a0a0a;
   --foreground: #ededed;
+  --navy: #c5cbf2;
+  --brand: #8f9bf0;
+  --frame: #1a1c4a;
+  --marker: rgba(202, 138, 4, 0.55);
+  --line: #2e2e2e;
+  --muted: #8a8a8a;
+}
+
+/* Exposes the tokens as utilities: bg-frame, text-brand, text-navy, border-line, ... */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-navy: var(--navy);
+  --color-brand: var(--brand);
+  --color-frame: var(--frame);
+  --color-marker: var(--marker);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --font-mono: var(--font-roboto-mono), ui-monospace, monospace;
+}
+
+/* ---------- Global scale ----------
+   Every size/spacing in the UI is written in rem, so scaling the root scales
+   the whole layout. At a ~1900px wide window 1rem = 16px, which is exactly the
+   size of the reference screenshots. Smaller screens shrink proportionally
+   instead of looking "zoomed in". */
+html {
+  font-size: 10px;
+}
+@media (min-width: 1024px) {
+  html {
+    font-size: clamp(11px, 0.44vw, 11px);
+  }
+}
+
+/* Phones only: scale everything up a bit */
+@media (max-width: 639px) {
+  html {
+    font-size: 13px;
+  }
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-roboto-mono), ui-monospace, monospace;
+  font-size: 1.0625rem;   /* 17px at the reference size */
+  letter-spacing: 0.005em;
+  line-height: 1.85;
+  word-spacing: 0.05em;
+}
+
+/* Section titles with the yellow marker underline */
+@layer components {
+  .heading-marker {
+    display: inline-block;
+    font-size: 1.375rem; /* ~15.1px at your 11px root (larger than your 1.0625rem / 11.7px body) */
+    font-weight: 300;
+    line-height: 0.5;
+    letter-spacing: 0.006em;
+    text-transform: uppercase;
+    background: linear-gradient(transparent 76%, var(--marker) 76%);
+  }
+}
+
+/* Scrollable area without a visible scrollbar (keeps the card clean) */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Scroll hint (mouse icon) */
+@keyframes scroll-hint-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(0.45rem); }
+}
+
+.scroll-hint-bounce {
+  animation: scroll-hint-bounce 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint-bounce { animation: none; }
 }

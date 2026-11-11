@@ -23,10 +23,17 @@ export default async function LocalizedLayout({ children, params }: LayoutProps)
   const isRtl = lang === 'ur';
 
   return (
-    <div dir={isRtl ? 'rtl' : 'ltr'} className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors">
-      <Navbar dict={dict} lang={lang} />
-      <main className="flex-grow">{children}</main>
-      <Footer lang={lang} />
+    // Outer blue frame (40px at the reference size)
+    <div
+      dir={isRtl ? 'rtl' : 'ltr'}
+      className="h-dvh overflow-hidden bg-frame p-5 lg:p-10 transition-colors"
+    >
+      {/* Inner white card (40px side padding at the reference size) */}
+      <div className="h-full flex flex-col bg-background text-foreground px-9 sm:px-8 lg:px-10 transition-colors">
+        <Navbar dict={dict} lang={lang} />
+        <main className="flex-1 min-h-0 overflow-y-auto no-scrollbar">{children}</main>
+        <Footer />
+      </div>
     </div>
   );
 }
