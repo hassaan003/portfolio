@@ -98,7 +98,7 @@ body {
 
     /* Move the line slightly below the heading's box */
     bottom: -0.35rem;
-    height: 3.5rem;
+    height: 1.5rem;
 
     background-color: var(--marker);
     z-index: -1;

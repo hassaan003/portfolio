@@ -108,7 +108,7 @@ export default async function ResumePage({ params }: PageProps) {
               className="inline-flex shrink-0 items-center gap-2 h-10 px-5 hover:text-brand transition-colors"
             >
               <Download className="size-4" />
-              <span>Download Resume</span>
+              <span>Download</span>
             </a>
           </div>
 

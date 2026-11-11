@@ -23,7 +23,7 @@ export default function RootLayout({
     /* suppressHydrationWarning is required by next-themes to prevent class mismatches */
     <html lang="en" suppressHydrationWarning className={`${robotoMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           {children}
         </ThemeProvider>
       </body>
