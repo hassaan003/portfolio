@@ -16,6 +16,7 @@ export const ur: Dictionary = {
     tagline: "مضبوط ویب ایپلیکیشنز، اسکیل ایبل آرکیٹیکچر، اور بہترین صارف تجربہ (UX) بنانا۔",
     viewProjects: "پروجیکٹس دیکھیں",
     contactMe: "رابطہ کریں",
+    viewResume: "سی وی دیکھیں",
   },
   sections: {
     projectsTitle: "نمایاں پروجیکٹس",

@@ -7,6 +7,8 @@ import { useTheme } from 'next-themes';
 import { Sun, Moon, Globe, Menu, X } from 'lucide-react';
 import { Dictionary } from '@/locales/en';
 import { Locale } from '@/types';
+import Image from 'next/image';
+
 
 interface NavbarProps {
   dict: Dictionary;
@@ -40,8 +42,15 @@ export default function Navbar({ dict, lang }: NavbarProps) {
         href={`/${lang}`}
         aria-label="Home"
         // logo
-        className="text-[1.8rem] sm:text-[2.05rem] font-bold tracking-tight hover:text-brand transition-colors"      >
-        HA
+        className="inline-flex items-center hover:opacity-80 transition-opacity">
+        <Image
+          src="/logo.png"
+          alt="Hassaan Ahmed Logo"
+          width={64}
+          height={32}
+          priority
+          className="h-17 sm:h-20 w-auto dark:invert"
+        />
       </Link>
 
       <div className="flex items-center gap-2 md:gap-8 lg:gap-[3.25rem]">

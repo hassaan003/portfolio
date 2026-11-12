@@ -4,6 +4,8 @@ import { en } from '@/locales/en';
 import { ur } from '@/locales/ur';
 import { Locale } from '@/types';
 export const instant = false;
+import Link from 'next/link';
+import { ArrowRight, Download } from 'lucide-react';
 
 const dictionaries = { en, ur };
 
@@ -54,6 +56,27 @@ async function HeroContent({ params }: PageProps) {
         ))}{' '}
         {dict.hero.outro}
       </p>
+
+      <div className="mt-12 inline-grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {/* Resume Button */}
+        <Link
+          href={`/${lang}/resume`}
+          className="inline-flex h-14 items-center justify-center gap-2 px-5 text-foreground normal-case transition-all hover:opacity-80"
+        >
+          {dict.hero.viewResume}
+          <ArrowRight className="size-4 rtl:rotate-180" />
+        </Link>
+
+        {/* Projects Button */}
+        <Link
+          href={`/${lang}/projects`}
+          className="inline-flex h-14 items-center justify-center gap-2 px-5 text-foreground normal-case transition-all hover:opacity-80"
+        >
+          {dict.hero.viewProjects}
+          <ArrowRight className="size-4 rtl:rotate-180" />
+        </Link>
+      </div>
+
     </section>
   );
 }
