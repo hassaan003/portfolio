@@ -116,11 +116,11 @@ body {
 /* Scroll hint (mouse icon) */
 @keyframes scroll-hint-bounce {
   0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(0.45rem); }
+  50%      { transform: translateY(0.55rem); }
 }
 
 .scroll-hint-bounce {
-  animation: scroll-hint-bounce 1.6s ease-in-out infinite;
+  animation: scroll-hint-bounce 1.0s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
