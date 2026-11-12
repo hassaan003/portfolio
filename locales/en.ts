@@ -14,6 +14,7 @@ export const en = {
     tagline: "Building robust web applications, scalable architectures, and seamless user experiences.",
     viewProjects: "View Projects",
     contactMe: "Get in Touch",
+    viewResume: "View Resume",
   },
   sections: {
     projectsTitle: "Featured Projects",
